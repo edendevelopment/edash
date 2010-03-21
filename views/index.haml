@@ -10,11 +10,17 @@
         }
         ul { margin:20px; }
         h2 { font-size: 0.8em; color: white; font-weight: normal; }
-        li { list-style:none; margin: 10px; padding: 0.25em; -webkit-border-radius: 15px; -webkit-box-shadow: 2px 2px 10px #000 }
-        li.building { background: -webkit-gradient(linear, left top, right top, from(#666), to(#999)); }
-        li.pass { background: -webkit-gradient(linear, left top, right top, from(#030), to(#050)); }
-        li.fail { background: -webkit-gradient(linear, left top, right top, from(#300), to(#500)); }
-        li.fail { background-color: #600; }
+        li { 
+          list-style:none; 
+          margin: 10px; 
+          padding: 0.25em; 
+          -webkit-border-radius: 15px; -webkit-box-shadow: 2px 2px 10px #000;
+          text-shadow: 2px 2px 15px #333;
+          width: 400px;
+        }
+        li.building { background: -webkit-gradient(linear, left top, left bottom, from(#aaa), to(#666), color-stop(0.5, #444)); }
+        li.pass { background: -webkit-gradient(linear, left top, left bottom, from(#4a4), to(#060), color-stop(0.5, #040)); }
+        li.fail { background: -webkit-gradient(linear, left top, left bottom, from(#a44), to(#600), color-stop(0.5, #400)); }
         a, a:visited { text-decoration: none; color: #fff; }
     %body
       %ul
