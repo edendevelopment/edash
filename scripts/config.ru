@@ -1,5 +1,5 @@
 # Required so that we can set path correctly for Config, which is loaded statically due to a bug in cijoe
-$project_path = File.dirname(__FILE__) + '/app'
+$project_path = File.expand_path(File.dirname(__FILE__) + '/app')
 require 'cijoe'
 
 class CIJoe
