@@ -1,7 +1,8 @@
 #!/bin/bash
 FULLPATH=`cd $(dirname $0); pwd`
+echo $FULLPATH >&2
 PROJECT=`echo $FULLPATH | awk -F/ '{print $(NF-3)}'`
-STATUS=`echo $0 | awk -F- '{print $NF == "worked" ? "pass" : "fail"}'`
-PW=`cat $(dirname $0)/../../../../credentials`
+STATUS=`echo $0 | awk -F- '{print $NF == "worked" ? "pass" : ($NF == "reset" ? "building" : "fail")}'`
+PW=`cat $FULLPATH/../../../../credentials`
 curl -u $PW -d"" -- http://ci.edendevelopment.co.uk/dashboard/build/$PROJECT/$STATUS
-echo
+echo "Project: "$PROJECT", Status: "$STATUS", Fullpath: "$FULLPATH >&2
