@@ -13,7 +13,7 @@ Webrat.configure do |config|
 end
 
 # set test environment
-set :environment, :test
-set :run, false
-set :raise_errors, true
-set :logging, false
+Dashboard.set :environment, :test
+Dashboard.set :run, false
+Dashboard.set :raise_errors, true
+Dashboard.set :logging, false

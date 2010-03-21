@@ -1,3 +1,3 @@
 require 'dashboard'
 
-run Sinatra::Application
+run Dashboard

@@ -5,8 +5,13 @@ describe "Dashboard" do
   include Webrat::Methods
   include Webrat::Matchers
 
+  after(:each) do
+    `rm #{File.dirname(__FILE__)}/../dashboard-test.pstore`
+    raise "Cannot remove test file!" if $? != 0
+  end
+
   def app
-    @app ||= Sinatra::Application
+    @app ||= Dashboard
   end
 
   it "responds to /" do
@@ -37,7 +42,7 @@ describe "Dashboard" do
     post 'build/moo/fail'
     visit '/'
     last_response.body.should have_selector('li', :class => 'fail') do |li|
-      li.should contain('moo')
+      li.should contain(/moo/)
     end
   end
 end
