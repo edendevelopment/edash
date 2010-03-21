@@ -5,13 +5,19 @@
       window.setTimeout('window.location.reload(true)', 20000)
     %style
       :plain
-        body { font-size:3em; font-family:arial; }
-        li.pass { color: #0d0; }
-        li.fail { color: #d00; }
+        body { font-size:3em; font-family:arial; 
+          background: -webkit-gradient(linear, left top, left bottom, from(#111), to(#111));
+        }
+        ul { margin:20px; }
+        h2 { font-size: 0.8em; color: white; font-weight: normal; }
+        li { list-style:none; margin: 10px; padding: 0.25em; -webkit-border-radius: 15px; -webkit-box-shadow: 2px 2px 10px #000 }
+        li.building { background: -webkit-gradient(linear, left top, right top, from(#666), to(#999)); }
+        li.pass { background: -webkit-gradient(linear, left top, right top, from(#030), to(#050)); }
+        li.fail { background: -webkit-gradient(linear, left top, right top, from(#300), to(#500)); }
+        li.fail { background-color: #600; }
+        a, a:visited { text-decoration: none; color: #fff; }
     %body
-      %h2= "CI Dashboard"
       %ul
       - @projects.each do |name, status|
         %li{:class => status}
           %a{:href => "/#{name}"}= "#{name}"
-          (#{status})

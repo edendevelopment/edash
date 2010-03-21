@@ -24,12 +24,6 @@ describe "Dashboard" do
     last_response.body.should match(/Dashboard/)
   end
 
-  it "allows setting of project state to pass" do
-    post 'build/moo/pass'
-    visit '/'
-    last_response.body.should match(/moo.*pass/m)
-  end
-
   it "tags passing builds green" do
     post 'build/moo/pass'
     visit '/'
