@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'haml'
+require 'sass'
 require 'pstore'
 
 class Dashboard < Sinatra::Base
@@ -24,5 +25,10 @@ class Dashboard < Sinatra::Base
       @store[project][:status] = status
       @store[project][:author] = params['author']
     end
+  end
+
+  get '/main.css' do
+    content_type 'text/css', :charset => 'utf-8'
+    sass :main
   end
 end

@@ -27,16 +27,16 @@ describe "Dashboard" do
   it "tags passing builds green" do
     post 'build/moo/pass'
     visit '/'
-    last_response.body.should have_selector('li', :class => 'pass') do |li|
-      li.should contain('moo')
+    last_response.body.should have_selector('li', :class => 'pass') do |div|
+      div.should contain('moo')
     end
   end
 
   it "tags failing builds red" do
     post 'build/moo/fail'
     visit '/'
-    last_response.body.should have_selector('li.fail') do |li|
-      li.should contain(/moo/)
+    last_response.body.should have_selector('div.fail') do |div|
+      div.should contain(/moo/)
     end
   end
 
@@ -45,8 +45,8 @@ describe "Dashboard" do
       author = 'Chris Parsons <chris@example.com>'
       post 'build/moo/fail', 'author=' + author
       visit '/'
-      last_response.body.should have_selector('li.fail') do |li|
-        li.should have_selector('img[src*="9655f78d38f380d17931f8dd9a227b9f"]')
+      last_response.body.should have_selector('div.fail') do |div|
+        div.should have_selector('img[src*="9655f78d38f380d17931f8dd9a227b9f"]')
       end
     end
 
@@ -54,8 +54,8 @@ describe "Dashboard" do
       author = 'C P <dev sermoa tristanharris@edendevelopment.co.uk>'
       post 'build/moo/fail', 'author=' + author
       visit '/'
-      last_response.body.should have_selector('li.fail') do |li|
-        li.should have_selector(
+      last_response.body.should have_selector('div.fail') do |div|
+        div.should have_selector(
         'img[src*="fecb482a5c1d13c869027b5dac71da00"]')
       end
     end
