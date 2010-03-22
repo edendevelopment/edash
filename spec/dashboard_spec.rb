@@ -27,7 +27,7 @@ describe "Dashboard" do
   it "tags passing builds green" do
     post 'build/moo/pass'
     visit '/'
-    last_response.body.should have_selector('li', :class => 'pass') do |div|
+    last_response.body.should have_selector('div.pass') do |div|
       div.should contain('moo')
     end
   end
