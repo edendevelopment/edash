@@ -13,7 +13,7 @@
             %a{:href => "/#{name}"}= "#{name}"
             - if project[:status] == 'building'
               .last_author
-                %img{:src => '/images/loading.gif'}
+                %img{:src => 'images/loading.gif'}
             - elsif project[:author]
               - require 'md5'
               .last_author
