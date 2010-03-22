@@ -4,6 +4,10 @@ require 'sass'
 require 'pstore'
 
 class Dashboard < Sinatra::Base
+
+  set :static, true
+  set :public, 'public'
+
   def initialize
     env = options.environment.to_s
     @store = PStore.new(File.dirname(__FILE__)+'/dashboard-'+ env +'.pstore')

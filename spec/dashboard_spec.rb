@@ -40,6 +40,13 @@ describe "Dashboard" do
     end
   end
 
+  it "tags building grey with a loading image" do
+    post 'build/moo/building'
+    visit '/'
+    last_response.body.should have_selector('div.building') do |div|
+      div.should have_selector("img[src*=loading]")
+    end
+  end
   context "posting an author" do
     it "shows the author gravator for the last commit" do
       author = 'Chris Parsons <chris@example.com>'
