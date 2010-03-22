@@ -3,7 +3,7 @@
     %title= "CI Dashboard"
     :javascript
       window.setTimeout('window.location.reload(true)', 20000)
-    %link{:rel => 'stylesheet', :type => 'text/css', :href => './main.css'}
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/./main.css'}
     %style
       :plain
     %body
@@ -13,7 +13,7 @@
             %a{:href => "/#{name}"}= "#{name}"
             - if project[:status] == 'building'
               .last_author
-                %img{:src => './images/loading.gif'}
+                %img{:src => '/./images/loading.gif'}
             - elsif project[:author]
               - require 'md5'
               .last_author
