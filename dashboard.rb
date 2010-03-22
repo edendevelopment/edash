@@ -15,7 +15,7 @@ class Dashboard < Sinatra::Base
 
   helpers do
     def path_root
-      ENV["PATH_INFO"]
+      ENV["RACK_BASE_URI"]
     end
   end
 
