@@ -49,5 +49,15 @@ describe "Dashboard" do
         li.should have_selector('img[src*="9655f78d38f380d17931f8dd9a227b9f"]')
       end
     end
+
+    it "replaces spaces with plusses in the email addresses" do
+      author = 'C P <dev sermoa tristanharris@edendevelopment.co.uk>'
+      post 'build/moo/fail', 'author=' + author
+      visit '/'
+      last_response.body.should have_selector('li.fail') do |li|
+        li.should have_selector(
+        'img[alt="C P <dev+aimee+chris@example.com>"][src*="fecb482a5c1d13c869027b5dac71da00"]')
+      end
+    end
   end
 end
