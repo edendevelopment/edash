@@ -56,7 +56,7 @@ describe "Dashboard" do
       visit '/'
       last_response.body.should have_selector('li.fail') do |li|
         li.should have_selector(
-        'img[alt="C P <dev+aimee+chris@example.com>"][src*="fecb482a5c1d13c869027b5dac71da00"]')
+        'img[src*="fecb482a5c1d13c869027b5dac71da00"]')
       end
     end
   end
