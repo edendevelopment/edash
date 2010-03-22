@@ -6,7 +6,7 @@ describe "Dashboard" do
   include Webrat::Matchers
 
   after(:each) do
-    `rm #{File.dirname(__FILE__)}/../dashboard-test.pstore`
+    `rm -f #{File.dirname(__FILE__)}/../dashboard-test.pstore`
     raise "Cannot remove test file!" if $? != 0
   end
 
@@ -35,8 +35,19 @@ describe "Dashboard" do
   it "tags failing builds red" do
     post 'build/moo/fail'
     visit '/'
-    last_response.body.should have_selector('li', :class => 'fail') do |li|
+    last_response.body.should have_selector('li.fail') do |li|
       li.should contain(/moo/)
+    end
+  end
+
+  context "posting an author" do
+    it "shows the author gravator for the last commit" do
+      author = 'Chris Parsons <chris@example.com>'
+      post 'build/moo/fail', 'author=' + author
+      visit '/'
+      last_response.body.should have_selector('li.fail') do |li|
+        li.should have_selector('img[src*="9655f78d38f380d17931f8dd9a227b9f"]')
+      end
     end
   end
 end

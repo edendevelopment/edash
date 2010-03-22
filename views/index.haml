@@ -16,14 +16,28 @@
           padding: 0.25em; 
           -webkit-border-radius: 15px; -webkit-box-shadow: 2px 2px 10px #000;
           text-shadow: 2px 2px 15px #333;
-          width: 400px;
+          width: 450px;
+          position: relative;
+          background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#444), color-stop(0.5, #222));
         }
-        li.building { background: -webkit-gradient(linear, left top, left bottom, from(#aaa), to(#666), color-stop(0.5, #444)); }
         li.pass { background: -webkit-gradient(linear, left top, left bottom, from(#4a4), to(#060), color-stop(0.5, #040)); }
         li.fail { background: -webkit-gradient(linear, left top, left bottom, from(#a44), to(#600), color-stop(0.5, #400)); }
+        li img { -webkit-border-radius: 5px; }
+        .last_author {
+          padding: 5px;
+          -webkit-border-radius: 5px; -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+          background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#111), color-stop(0.5, #000));
+          position: absolute; 
+          top:10px; right:10px; 
+        }
         a, a:visited { text-decoration: none; color: #fff; }
     %body
       %ul
-      - @projects.each do |name, status|
-        %li{:class => status}
+      - @projects.each do |name, project|
+        %li{:class => project[:status]}
           %a{:href => "/#{name}"}= "#{name}"
+          - if project[:author]
+            - require 'md5'
+            .last_author
+              %img{:src => "http://www.gravatar.com/avatar/#{MD5::md5(project[:author].match(/<(.*)>/)[1])}?s=50", :width => '50', :height => '50', :alt => project[:author]}
+

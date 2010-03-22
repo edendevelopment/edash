@@ -19,6 +19,10 @@ class Dashboard < Sinatra::Base
   end
 
   post '/build/:project/:status' do |project, status|
-    @store.transaction { @store[project] = status }
+    @store.transaction do
+      @store[project] ||= {}
+      @store[project][:status] = status
+      @store[project][:author] = params['author']
+    end
   end
 end
