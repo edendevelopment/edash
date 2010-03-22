@@ -13,6 +13,12 @@ class Dashboard < Sinatra::Base
     @store = PStore.new(File.dirname(__FILE__)+'/dashboard-'+ env +'.pstore')
   end
 
+  helpers do
+    def path_root
+      ENV["PATH_INFO"]
+    end
+  end
+
   get '/?' do
     @projects = {}
     @store.transaction do
