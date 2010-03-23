@@ -10,11 +10,12 @@
       .projects
         - @projects.each do |name, project|
           .project
-            %a{:class => project[:status], :href => "/#{name}"}= "#{name}"
-            - if project[:status] == 'building'
-              .last_author
-                %img{:src => "#{path_root}/images/loading.gif"}
-            - elsif project[:author]
-              - require 'md5'
-              .last_author
-                %img{:src => "http://www.gravatar.com/avatar/#{MD5::md5(project[:author].match(/<(.*)>/)[1].gsub(' ', '+'))}?s=50", :width => '50', :height => '50', :alt => project[:author]}
+            %a{:class => project[:status], :href => "/#{name}"}
+              = name
+              - if project[:status] == 'building'
+                .last_author
+                  %img{:src => "#{path_root}/images/loading.gif"}
+              - elsif project[:author]
+                - require 'md5'
+                .last_author
+                  %img{:src => "http://www.gravatar.com/avatar/#{MD5::md5(project[:author].match(/<(.*)>/)[1].gsub(' ', '+'))}?s=50", :width => '50', :height => '50', :alt => project[:author]}
