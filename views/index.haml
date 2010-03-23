@@ -9,8 +9,8 @@
     %body
       .projects
         - @projects.each do |name, project|
-          %div.project{:class => project[:status]}
-            %a{:href => "/#{name}"}= "#{name}"
+          .project
+            %a{:class => project[:status], :href => "/#{name}"}= "#{name}"
             - if project[:status] == 'building'
               .last_author
                 %img{:src => "#{path_root}/images/loading.gif"}
