@@ -1,0 +1,23 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'em-websocket'
+
+EventMachine.run do
+  @channel = EM::Channel.new
+  EventMachine::WebSocket.start(:host => "localhost", :port => 8080) do |ws|
+    ws.onopen do
+      puts "SERVER: Opened connection"
+      @sid = @channel.subscribe { |msg| ws.send msg }
+    end
+    ws.onmessage do |msg|
+      puts "SERVER: received: #{msg}"
+      @channel.push msg
+    end
+    ws.onclose do
+      puts "SERVER: Closed connection"
+      @channel.unsubscribe @sid
+    end
+  end
+  puts "SERVER: Started"
+end

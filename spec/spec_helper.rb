@@ -1,6 +1,8 @@
-require File.join(File.dirname(__FILE__), '..', 'dashboard.rb')
-
 require 'rubygems'
+
+require File.join(File.dirname(__FILE__), '..', 'dashboard.rb')
+require File.join(File.dirname(__FILE__), '..', 'client.rb')
+
 require 'sinatra'
 require 'rack/test'
 require 'webrat'
@@ -13,7 +15,7 @@ Webrat.configure do |config|
 end
 
 # set test environment
-Dashboard.set :environment, :test
-Dashboard.set :run, false
-Dashboard.set :raise_errors, true
-Dashboard.set :logging, false
+Dashboard::Server.set :environment, :test
+Dashboard::Server.set :run, false
+Dashboard::Server.set :raise_errors, true
+Dashboard::Server.set :logging, false

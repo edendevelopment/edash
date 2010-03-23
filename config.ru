@@ -1,3 +1,3 @@
 require 'dashboard'
 
-run Dashboard
+run Dashboard::Server
