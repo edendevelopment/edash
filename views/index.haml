@@ -1,21 +1,55 @@
 %html
   %head
     %title= "CI Dashboard"
+    %script{:type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
     :javascript
-      window.setTimeout('window.location.reload(true)', 20000)
+      $(document).ready(function(){
+        ws = new WebSocket("ws://localhost:8080/");
+        ws.onmessage = function(evt) { 
+          project = JSON.parse(evt.data);
+          box = $('#'+project.project_name+' a');
+          newbox = box.clone();
+          newbox.removeClass();
+          // project specific stuff
+          newbox.addClass(project.status);
+          if (project.status == 'building')
+          {
+            newbox.find('img').attr('src', 'images/loading.gif');
+          }
+          else
+          {
+            newbox.find('img').attr('src', project.author_gravatar);
+          }
+          // animation stuff
+          newbox.css('position', 'absolute');
+          newbox.hide();
+          newbox.appendTo(box.parent());
+          newbox.fadeIn(1000, function(){
+            newbox.css('position', 'static');
+            box.remove();
+          });
+          box.fadeOut(1000);
+        };
+
+        ws.onclose = function() { 
+          window.setTimeout('window.location.reload(true)', 5000);
+          $('.server-closed').show();
+        };
+
+        ws.onopen = function() { };
+      });
     %link{:rel => 'stylesheet', :type => 'text/css', :href => "#{path_root}/main.css"}
-    %style
-      :plain
-    %body
-      .projects
-        - @projects.each do |name, project|
-          .project
-            %a{:class => project[:status], :href => "/#{name}"}
-              = name
-              - if project[:status] == 'building'
-                .last_author
-                  %img{:src => "#{path_root}/images/loading.gif"}
-              - elsif !project[:author].nil? && project[:author] != ""
-                - require 'md5'
-                .last_author
-                  %img{:src => "http://www.gravatar.com/avatar/#{MD5::md5(project[:author].match(/<(.*)>/)[1].gsub(' ', '+'))}?s=50", :width => '50', :height => '50', :alt => project[:author]}
+  %body
+    .server-closed
+      Server connection problem: try a refresh.
+    .projects
+      - @projects.each do |name, project|
+        %div{:class => "project", :id => name }
+          %a{:class => project[:status], :href => "/#{name}"}
+            = name
+            - if project[:status] == 'building'
+              .last_author
+                %img{:src => "#{path_root}/images/loading.gif"}
+            - elsif !project[:author].nil? && project[:author] != ""
+              .last_author
+                %img{:src => gravatar_from(project[:author]), :width => '50', :height => '50', :alt => project[:author]}

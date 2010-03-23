@@ -1,5 +1,4 @@
 =shiny_box
-  color: #fff
   padding: 0.25em
   display: table-cell
   -webkit-border-radius: 15px
@@ -19,6 +18,14 @@ body
   font-size: 3em
   font-family: arial
   background: #111
+  color: #fff
+  a
+    color: #fff
+.server-closed
+  +shiny_box
+  +red_gradient
+  font-size: 0.5em
+  display: none
 
 .projects
   margin: 15px
@@ -26,6 +33,7 @@ body
 .project 
   padding-bottom: 10px
   clear: both
+  position: relative
   overflow: auto
   .pairs
     .pair

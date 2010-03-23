@@ -3,6 +3,7 @@ require 'haml'
 require 'sass'
 require 'json'
 require 'pstore'
+require 'md5'
 
 require 'client'
 
@@ -20,6 +21,9 @@ module Dashboard
     helpers do
       def path_root
         ENV["RACK_BASE_URI"]
+      end
+      def gravatar_from(author)
+        "http://www.gravatar.com/avatar/#{MD5::md5(author.match(/<(.*)>/)[1].gsub(' ', '+'))}?s=50"
       end
     end
 
@@ -40,6 +44,9 @@ module Dashboard
         @store[project_name][:status] = status
         @store[project_name][:author] = params['author']
         project = @store[project_name].merge(:project_name => project_name)
+        if (params['author'] && params['author'].size > 0)
+          project.merge! :author_gravatar => gravatar_from(params['author'])
+        end
       end
       Dashboard::Client.send_message(request.host, project.to_json)
     end
