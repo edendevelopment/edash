@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'haml'
 require 'sass'
+require 'json'
 require 'pstore'
 
 require 'client'
@@ -32,13 +33,15 @@ module Dashboard
       haml :index
     end
 
-    post '/build/:project/:status' do |project, status|
+    post '/build/:project_name/:status' do |project_name, status|
+      project = nil
       @store.transaction do
-        @store[project] ||= {}
-        @store[project][:status] = status
-        @store[project][:author] = params['author']
+        @store[project_name] ||= {}
+        @store[project_name][:status] = status
+        @store[project_name][:author] = params['author']
+        project = @store[project_name].merge(:project_name => project_name)
       end
-      Dashboard::Client.send_message(request.host, 'foo')
+      Dashboard::Client.send_message(request.host, project.to_json)
     end
 
     get '/main.css' do

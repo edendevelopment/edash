@@ -77,7 +77,7 @@ describe Dashboard::Server do
       end
       
       it "posts to a websocket" do
-        Dashboard::Client.should_receive(:send_message).with(anything, "foo")
+        Dashboard::Client.should_receive(:send_message).with(anything, '{"status":"fail","author":"","project_name":"moo"}')
         do_post
       end
     end
