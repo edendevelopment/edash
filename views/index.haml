@@ -4,7 +4,7 @@
     %script{:type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
     :javascript
       $(document).ready(function(){
-        ws = new WebSocket("ws://localhost:8080/");
+        ws = new WebSocket("ws://#{request.host}:8080/");
         ws.onmessage = function(evt) { 
           project = JSON.parse(evt.data);
           box = $('#'+project.project_name+' a');
