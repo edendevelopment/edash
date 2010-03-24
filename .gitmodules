@@ -1,0 +1,3 @@
+[submodule "vendor/gems/em-websocket"]
+	path = vendor/gems/em-websocket
+	url = git://github.com/igrigorik/em-websocket.git
