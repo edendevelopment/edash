@@ -3,40 +3,57 @@
     %title= "CI Dashboard"
     %script{:type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
     :javascript
+      queue = new Array();
+
+      function processQueue() {
+        if (queue.length == 0) { 
+          window.setTimeout("processQueue()", 1000);
+          return; 
+        }
+        project = queue.shift();
+        box = $('#'+project.project_name+' a');
+        if (box.size() == 0) {
+          document.location.reload(true);
+        }
+        newbox = box.clone();
+        newbox.removeClass();
+        // Switch to help with threading
+        // project specific stuff
+        newbox.addClass(project.status);
+        if (project.status == 'building') {
+          newbox.find('img').attr('src', 'images/loading.gif');
+        }
+        else {
+          newbox.find('img').attr('src', project.author_gravatar);
+        }
+        // animation stuff
+        newbox.css('position', 'absolute');
+        newbox.hide();
+        newbox.appendTo(box.parent());
+        newbox.fadeIn(2000, function(){
+          newbox.css('position', 'static');
+          box.remove();
+          window.setTimeout("processQueue()", 1);
+        });
+        box.fadeOut(2000);
+      };
+
       $(document).ready(function(){
         ws = new WebSocket("ws://#{request.host}:8080/");
         ws.onmessage = function(evt) { 
           project = JSON.parse(evt.data);
-          box = $('#'+project.project_name+' a');
-          newbox = box.clone();
-          newbox.removeClass();
-          // project specific stuff
-          newbox.addClass(project.status);
-          if (project.status == 'building')
-          {
-            newbox.find('img').attr('src', 'images/loading.gif');
-          }
-          else
-          {
-            newbox.find('img').attr('src', project.author_gravatar);
-          }
-          // animation stuff
-          newbox.css('position', 'absolute');
-          newbox.hide();
-          newbox.appendTo(box.parent());
-          newbox.fadeIn(1000, function(){
-            newbox.css('position', 'static');
-            box.remove();
-          });
-          box.fadeOut(1000);
-        };
+          queue.push(project);
+          console.log("QUEUE: "+queue);
+        }
 
         ws.onclose = function() { 
-          window.setTimeout('window.location.reload(true)', 5000);
+          window.setTimeout('window.location.reload(true)', 10000);
           $('.server-closed').show();
         };
 
         ws.onopen = function() { };
+
+        window.setTimeout("processQueue()", 1000);
       });
     %link{:rel => 'stylesheet', :type => 'text/css', :href => "#{path_root}/main.css"}
   %body
