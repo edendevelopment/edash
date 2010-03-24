@@ -21,7 +21,7 @@
         // project specific stuff
         newbox.addClass(project.status);
         if (project.status == 'building') {
-          newbox.find('img').attr('src', 'images/loading.gif');
+          newbox.find('img').attr('src', '#{path_root}/images/loading.gif');
         }
         else {
           newbox.find('img').attr('src', project.author_gravatar);
