@@ -1,8 +1,11 @@
 #!/bin/bash
+# Set this to your dashboard url
+HOST=http://ci.edendevelopment.co.uk/dashboard
+
 FULLPATH=`cd $(dirname $0); pwd`
 echo $FULLPATH >&2
 PROJECT=`echo $FULLPATH | awk -F/ '{print $(NF-3)}'`
 STATUS=`echo $0 | awk -F- '{print $NF == "worked" ? "pass" : ($NF == "reset" ? "building" : "fail")}'`
 PW=`cat $FULLPATH/../../../../credentials`
-curl -u $PW -d"author=$AUTHOR" -- http://ci.edendevelopment.co.uk/dashboard/build/$PROJECT/$STATUS
+curl -u $PW -d"author=$AUTHOR" -d"project=$PROJECT" -d"status=$STATUS" -- $HOST/build
 echo "Project: "$PROJECT", Status: "$STATUS", Fullpath: "$FULLPATH >&2
