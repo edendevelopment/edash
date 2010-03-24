@@ -37,11 +37,12 @@ module Dashboard
       haml :index
     end
 
-    post '/build/:project_name/:status' do |project_name, status|
+    post '/build/?' do
       project = nil
+      project_name = params['project']
       @store.transaction do
         @store[project_name] ||= {}
-        @store[project_name][:status] = status
+        @store[project_name][:status] = params['status']
         @store[project_name][:author] = params['author']
         project = @store[project_name].merge(:project_name => project_name)
         if (params['author'] && params['author'].size > 0)
