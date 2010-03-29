@@ -1,0 +1,7 @@
+DASHBOARD
+
+This application is designed as an open source clone of Panic's real time dashboard application.
+
+It currently supports build pass/fail/building messages only.
+
+Watch http://chrismdp.github.com for updates.
