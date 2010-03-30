@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require 'rubygems'
 require File.dirname(__FILE__) + '/../vendor/gems/em-websocket/lib/em-websocket'
