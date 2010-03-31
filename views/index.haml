@@ -9,7 +9,7 @@
       }
 
       function updateProjectBoxWithFade(project) {
-        box = $('#'+project.project_name+' a');
+        box = $('#'+project.name+' a');
         if (box.size() == 0) {
           document.location.reload(true);
         }
@@ -60,11 +60,11 @@
     .projects
       - @projects.each do |name, project|
         %div{:class => "project", :id => name }
-          %a{:class => project[:status], :href => "/#{name}"}
+          %a{:class => project.status, :href => "/#{name}"}
             = name
-            - if project[:status] == 'building'
+            - if project.status == 'building'
               .last_author
                 %img{:src => "#{path_root}/images/loading.gif"}
-            - elsif !project[:author].nil? && project[:author] != ""
+            - elsif !project.author.nil? && project.author != ""
               .last_author
-                %img{:src => gravatar_from(project[:author]), :width => '50', :height => '50', :alt => project[:author]}
+                %img{:src => project.author_gravatar, :width => '50', :height => '50', :alt => project.author}
