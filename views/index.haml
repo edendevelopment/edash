@@ -2,22 +2,19 @@
   %head
     %title= "CI Dashboard"
     %script{:type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
+    %script{:type => "text/javascript", :src => "#{path_root}/javascripts/queue.js"}
     :javascript
-      queue = new Array();
+      function runQueueIn(count) {
+        window.setTimeout("queue.process()", count);
+      }
 
-      function processQueue() {
-        if (queue.length == 0) { 
-          window.setTimeout("processQueue()", 1000);
-          return; 
-        }
-        project = queue.shift();
+      function updateProjectBoxWithFade(project) {
         box = $('#'+project.project_name+' a');
         if (box.size() == 0) {
           document.location.reload(true);
         }
         newbox = box.clone();
         newbox.removeClass();
-        // Switch to help with threading
         // project specific stuff
         newbox.addClass(project.status);
         if (project.status == 'building') {
@@ -33,17 +30,18 @@
         newbox.fadeIn(2000, function(){
           newbox.css('position', 'static');
           box.remove();
-          window.setTimeout("processQueue()", 500);
+          queue.schedule(500);
         });
         box.fadeOut(2000);
       };
+
+      queue = new Queue(updateProjectBoxWithFade, runQueueIn);
 
       $(document).ready(function(){
         ws = new WebSocket("ws://#{request.host}:8080/");
         ws.onmessage = function(evt) { 
           project = JSON.parse(evt.data);
           queue.push(project);
-          console.log("QUEUE: "+queue);
         }
 
         ws.onclose = function() { 
@@ -53,7 +51,7 @@
 
         ws.onopen = function() { };
 
-        window.setTimeout("processQueue()", 1000);
+        queue.schedule(1000);
       });
     %link{:rel => 'stylesheet', :type => 'text/css', :href => "#{path_root}/main.css"}
   %body
