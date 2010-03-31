@@ -10,6 +10,10 @@ Watch http://chrismdp.github.com for updates.
 Integrating with CI servers
 ===========================
 
+CI Joe
+------
+This [blog post](http://chrismdp.github.com/2010/03/multiple-ci-joes-with-rack-and-passenger/) contains a build-hook script which you can symlink all three CI Joe hook scripts to (after-reset, build-worked, build-failed). See that post for full instructions: It's what we use and therefore fairly easy.
+
 cruisecontrol.rb
 ----------------
 (thanks to [Gavin Heavyside](http://twitter.com/_hgavin))
