@@ -10,6 +10,11 @@ module Dashboard
 
     set :static, true
     set :public, 'public'
+    set :haml, { :format => :html5 }
+
+    before do
+      headers 'Content-Type' => 'text/html; charset=utf-8'
+    end
 
     def initialize
       Project.init_store(options.environment.to_s)
