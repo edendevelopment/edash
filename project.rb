@@ -7,7 +7,8 @@ module Dashboard
     class << self
       def init_store(env)
         @store = PStore.new(File.dirname(__FILE__)+'/dashboard-'+ env +'.pstore')
-      end  
+      end
+
       def store
         @store
       end
@@ -19,7 +20,7 @@ module Dashboard
             projects[name] = store[name]
           end
         end
-        projects
+        projects.sort
       end
 
       def save(project)
@@ -30,6 +31,10 @@ module Dashboard
     end
 
     attr_reader :name, :author, :status, :author_gravatar
+
+    def <=>(other)
+      self.name <=> other.name
+    end
 
     def initialize(params)
       @name = params['project']
