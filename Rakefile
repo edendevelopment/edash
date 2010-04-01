@@ -13,5 +13,6 @@ end
 Spec::Rake::SpecTask.new(:rcov) do |spec|
   spec.libs << 'lib' << 'spec'
   spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov_opts = %w{--exclude gems/*,Ruby}
   spec.rcov = true
 end
