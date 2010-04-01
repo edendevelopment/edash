@@ -3,3 +3,5 @@ tmp*
 *.pstore
 *swp
 nohup.out
+coverage
+**DS_Store
