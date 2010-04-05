@@ -6,7 +6,7 @@
   text-shadow: 2px 2px 15px #333
   margin-right: 15px
 =black_gradient
-  background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#111), color-stop(0.5, #000))
+  background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#171717), color-stop(0.5, #000))
 =grey_gradient
   background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#444), color-stop(0.5, #222))
 =green_gradient
@@ -30,16 +30,42 @@ body
 .projects
   margin: 15px
 
+.downarrow
+  position: relative
+  top: 3px
+  border: 25px solid
+  border-color: transparent
+  border-top-color: #a22
+  -webkit-transform: scale(0.75)
+  width: 0px
+  height: 0px
+  margin: auto
+
+.uparrow
+  position: relative
+  top: -15px
+  border: 25px solid 
+  border-color: transparent
+  border-bottom-color: #090
+  -webkit-transform: scale(0.75)
+  width: 0px
+  height: 0px
+  margin: auto
+
 .project 
   padding-bottom: 10px
   clear: both
   position: relative
-  .pairs
-    .pair
-      width: 100px
-      float: left
-      +shiny_box
-      +black_gradient
+  .stat
+    font-size: 0.5em
+    width: 60px
+    float: left
+    +shiny_box
+    +black_gradient
+    .number
+      position: relative
+      top: -15px
+      text-align: center
   a
     margin-bottom: 15px
     position: relative
@@ -56,7 +82,7 @@ body
 div 
   img
     -webkit-border-radius: 5px
-    
+
 .last_author 
   padding: 5px
   margin: 0px

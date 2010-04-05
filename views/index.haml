@@ -69,3 +69,9 @@
             - elsif !project.author.nil? && project.author != ""
               .last_author
                 %img{:src => project.author_gravatar, :width => '50', :height => '50', :alt => project.author}
+          .stat
+            .uparrow
+            .number= "2%"
+          .stat
+            .downarrow
+            .number= "2%"
