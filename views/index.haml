@@ -37,7 +37,12 @@
       };
 
       queue = new Queue(updateProjectBoxWithFade, runQueueIn);
-
+      
+      errorfunction = function() { 
+          window.setTimeout('window.location.reload(true)', 10000);
+          $('.server-closed').show();
+        };
+ 
       $(document).ready(function(){
         ws = new WebSocket("ws://#{request.host}:8080/");
         ws.onmessage = function(evt) { 
@@ -45,11 +50,8 @@
           queue.push(project);
         }
 
-        ws.onclose = function() { 
-          window.setTimeout('window.location.reload(true)', 10000);
-          $('.server-closed').show();
-        };
-
+        ws.onclose = errorfunction;
+        ws.onerror = errorfunction;
         ws.onopen = function() { };
 
         queue.schedule(1000);
