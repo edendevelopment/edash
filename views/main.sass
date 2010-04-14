@@ -1,21 +1,25 @@
 =shiny_box
   padding: 0.25em
-  display: table-cell
   -webkit-border-radius: 15px
   -webkit-box-shadow: 2px 2px 10px #000
   text-shadow: 2px 2px 15px #333
   margin-right: 15px
+=progress_bar
+  padding: 0.25em 1em
+  -webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5)
+  margin: 0
 =black_gradient
-  background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#111), color-stop(0.5, #000))
+  background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#171717), color-stop(0.5, #000))
 =grey_gradient
   background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#444), color-stop(0.5, #222))
 =green_gradient
   background: -webkit-gradient(linear, left top, left bottom, from(#4a4), to(#060), color-stop(0.5, #040))
+=dk_green_gradient
+  background: -webkit-gradient(linear, left top, left bottom, from(#161), to(#030), color-stop(0.5, #010))
 =red_gradient
   background: -webkit-gradient(linear, left top, left bottom, from(#a44), to(#600), color-stop(0.5, #400))
 
 body
-  font-size: 3em
   font-family: arial
   background: #111
   color: #fff
@@ -24,24 +28,70 @@ body
 .server-closed
   +shiny_box
   +red_gradient
-  font-size: 0.5em
+  font-size: 1.5em
   display: none
 
 .projects
   margin: 15px
 
+=arrow
+  position: relative
+  border: 20px solid
+  border-color: transparent
+  -webkit-transform: scale(0.75)
+  width: 0px
+  height: 0px
+  margin: 2px auto
+
+.downarrow
+  +arrow
+  top: 3px
+  border-top-color: #911
+
+.uparrow
+  +arrow
+  top: -13px
+  border-bottom-color: #070
+
 .project 
   padding-bottom: 10px
   clear: both
   position: relative
-  .pairs
-    .pair
-      width: 100px
-      float: left
-      +shiny_box
+  .progress-bg
+    margin: 70px 0px 0px 10px
+    padding: 0
+    position: absolute
+    .progress
+      float: right
+      +progress_bar
+    .progress:first-child
+      -webkit-border-radius: 0px 15px 15px 0px
+    .progress:last-child
+      -webkit-border-radius: 15px 0px 0px 15px
+    .progress.finished
+      +green_gradient
+      width: 20px
+    .progress.started
+      +grey_gradient
+    .progress.notstarted
       +black_gradient
+  .stat
+    min-width: 60px
+    float: left
+    +shiny_box
+    +black_gradient
+    color: #ddd
+    text-align: center
+    .number
+      margin-top: -5px
+      font-size: 1.2em
+      font-weight: bold
+    .label
+      margin: 0px 5px
+      font-size: 0.85em 
   a
-    margin-bottom: 15px
+    font-size: 3em
+    margin-bottom: 25px
     position: relative
     width: 450px
     float: left
@@ -56,7 +106,7 @@ body
 div 
   img
     -webkit-border-radius: 5px
-    
+
 .last_author 
   padding: 5px
   margin: 0px

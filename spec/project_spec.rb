@@ -22,6 +22,14 @@ describe Dashboard::Project do
         Dashboard::Project.save(project)
       end
     end
+
+    context "#find" do
+      it "retrieve the project by name" do
+        project = mock(:project)
+        store.should_receive(:[]).with('foo').and_return(project)
+        Dashboard::Project.find('foo').should == project
+      end
+    end
   end
   context "no author" do
     subject { Dashboard::Project.new('project' => 'foo', 'status' => 'pass')}
@@ -40,6 +48,15 @@ describe Dashboard::Project do
     its(:to_json) do
       should match(/"name":"foo"/)
       should match(/"author":"Chris/)
+    end
+  end
+
+  context "adding progress" do
+    it "stores the given progress values" do
+      project = Dashboard::Project.new('project' => 'foo')
+      progress = mock(:progress)
+      project.progress = progress
+      project.progress.should == progress
     end
   end
 end

@@ -38,6 +38,13 @@ module Dashboard
       Dashboard::Client.send_message(request.host, project.to_json)
     end
 
+    post '/progress/?' do
+      project = Project.find(params[:project])
+      progress = JSON.parse(params[:progress])
+      project.progress = progress
+      Project.save(project)
+    end
+
     get '/main.css' do
       content_type 'text/css', :charset => 'utf-8'
       sass :main

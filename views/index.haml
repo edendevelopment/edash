@@ -71,3 +71,8 @@
             - elsif !project.author.nil? && project.author != ""
               .last_author
                 %img{:src => project.author_gravatar, :width => '50', :height => '50', :alt => project.author}
+          - if project.progress
+            .progress-bg
+              - project.progress.each do |phase|
+                %div{:class => "progress #{phase.first}"}
+                  = phase.last
