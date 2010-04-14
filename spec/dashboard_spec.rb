@@ -5,6 +5,10 @@ describe Dashboard::Server do
   include Webrat::Methods
   include Webrat::Matchers
 
+  before(:each) do
+    Dashboard::Client.stub!(:send_message)
+  end
+
   after(:each) do
     `rm -f #{File.dirname(__FILE__)}/../dashboard-test.pstore`
     raise "Cannot remove test file!" if $? != 0
@@ -24,11 +28,23 @@ describe Dashboard::Server do
     last_response.body.should match(/Dashboard/)
   end
 
-  context "posting build update" do
+  context "posting progress update" do
     before(:each) do
-      Dashboard::Client.stub!(:send_message)
+      post 'build', :project => 'moo', :status => 'pass'
     end
-
+    it "does not show a progress bar before submission" do
+      visit '/'
+      last_response.body.should_not have_selector('div.progress')
+    end
+    it "shows the progress bar for the project" do
+      post "progress", :project => "moo", :progress => %{[["finished","10"],["started","40"],["unstarted","10"]]}
+      visit '/'
+      last_response.body.should have_selector('div.progress.finished') do|div|
+        div.should contain(/10/)
+      end
+    end
+  end
+  context "posting build update" do
     def do_post(status)
       post 'build', :project => 'moo', :status => status
       visit '/'

@@ -69,26 +69,8 @@
             - elsif !project.author.nil? && project.author != ""
               .last_author
                 %img{:src => project.author_gravatar, :width => '50', :height => '50', :alt => project.author}
-          .stat
-            .label= "awesomeness"
-            .uparrow
-            .number= "2%"
-          .stat
-            .label= "biscuits"
-            .downarrow
-            .number= "2%"
-          .stat
-            .label= "cash"
-            .downarrow
-            .number= "2%"
-          .stat
-            .label= "win"
-            .uparrow
-            .number= "100%"
-          .progress-bg
-            .progress.notstarted
-              4
-            .progress.started
-              4
-            .progress.finished
-              4
+          - if project.progress
+            .progress-bg
+              - project.progress.each do |phase|
+                %div{:class => "progress #{phase.first}"}
+                  = phase.last
