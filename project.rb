@@ -2,11 +2,11 @@ require 'pstore'
 require 'md5'
 require 'json'
 
-module Dashboard
+module EDash
   class Project
     class << self
       def init_store(env)
-        @store = PStore.new(File.dirname(__FILE__)+'/dashboard-'+ env +'.pstore')
+        @store = PStore.new(File.dirname(__FILE__)+'/edash-'+ env +'.pstore')
       end
 
       def store
@@ -28,9 +28,16 @@ module Dashboard
           store[project.name] = project
         end
       end
+
+      def find(name)
+        store.transaction do
+          store[name]
+        end
+      end
     end
 
     attr_reader :name, :author, :status, :author_gravatar
+    attr :progress, :writer => true
 
     def <=>(other)
       self.name <=> other.name
@@ -38,6 +45,10 @@ module Dashboard
 
     def initialize(params)
       @name = params['project']
+      update_from(params)
+    end
+
+    def update_from(params)
       @author = params['author']
       @status = params['status']
 
@@ -45,7 +56,7 @@ module Dashboard
         @author_gravatar = gravatar_from(params['author'])
       end
     end
-
+    
     def gravatar_from(author)
       "http://www.gravatar.com/avatar/#{MD5::md5(author.match(/<(.*)>/)[1].gsub(' ', '+'))}?s=50"
     end
