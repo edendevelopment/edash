@@ -1,5 +1,3 @@
-require 'nokogiri'
-
 class Pivotal::Progress
   attr_reader :state
 

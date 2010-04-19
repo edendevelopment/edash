@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module Pivotal
   module Api
     def from(xml)
