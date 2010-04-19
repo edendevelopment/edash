@@ -34,15 +34,22 @@ module EDash
     end
 
     post '/build/?' do
-      project = Project.new(params)
+      project = Project.find(params[:project])
+      if (project.nil?)
+        project = Project.new(params)
+      end
       Project.save(project)
       EDash::Client.send_message(request.host, project.to_json)
     end
 
     post '/progress/?' do
       project = Project.find(params[:project])
-      project.progress = ProgressReport.new(params[:progress])
-      Project.save(project)
+      if (project.nil?)
+        return 404
+      else
+        project.progress = ProgressReport.new(params[:progress])
+        Project.save(project)
+      end
     end
 
     get '/main.css' do
