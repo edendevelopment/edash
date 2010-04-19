@@ -13,7 +13,7 @@ Installing and running
 
 Here's a minimal set of steps to get it running:
 
-    gem install sinatra haml sass json pstore md5 eventmachine em-http-request harmony
+    gem install sinatra haml sass json pstore md5 eventmachine em-http-request harmony nokogiri
     git clone git://github.com/edendevelopment/edash.git
     cd edash
     git submodule update --init
