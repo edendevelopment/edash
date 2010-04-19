@@ -28,6 +28,17 @@ module EDash
       end
     end
 
+    # No iPad support yet
+    get '/?', :agent => /iPhone|iPod/ do
+      @projects = Project.all
+      haml :mobile
+    end
+    
+    get '/refresh', :agent => /iPhone|iPod/ do
+      @projects = Project.all
+      haml :mobile
+    end
+    
     get '/?' do
       @projects = Project.all
       haml :index
@@ -57,6 +68,11 @@ module EDash
     get '/main.css' do
       content_type 'text/css', :charset => 'utf-8'
       sass :main
+    end
+    
+    get '/mobile.css' do
+      content_type 'text/css', :charset => 'utf-8'
+      sass :mobile
     end
   end
 end
