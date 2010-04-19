@@ -14,10 +14,7 @@ module EDash
 
     def initialize(json)
       phase_pairs = JSON.parse(json)
-      total_width = calculate_total_width(phase_pairs)
-      @phases = phase_pairs.collect do |pair|
-        Phase.new(pair.first, pair.last.to_i, width_for(pair.last.to_i, total_width))
-      end
+      @phases = create_phases_from_pairs(phase_pairs)
     end
 
     def each(&block)
@@ -25,6 +22,13 @@ module EDash
     end
 
   private
+    def create_phases_from_pairs(pairs)
+      total_width = calculate_total_width(pairs)
+      pairs.collect do |pair|
+        Phase.new(pair.first, pair.last.to_i, width_for(pair.last.to_i, total_width))
+      end
+    end
+
     def calculate_total_width(pairs)
       pairs.inject(0) do |sum, pair|
         sum += pair.last.to_i
