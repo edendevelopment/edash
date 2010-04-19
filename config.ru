@@ -1,3 +1,3 @@
-require 'dashboard'
+require 'server'
 
-run Dashboard::Server
+run EDash::Server

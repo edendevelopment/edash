@@ -2,11 +2,11 @@ require 'pstore'
 require 'md5'
 require 'json'
 
-module Dashboard
+module EDash
   class Project
     class << self
       def init_store(env)
-        @store = PStore.new(File.dirname(__FILE__)+'/dashboard-'+ env +'.pstore')
+        @store = PStore.new(File.dirname(__FILE__)+'/edash-'+ env +'.pstore')
       end
 
       def store

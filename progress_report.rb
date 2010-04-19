@@ -1,4 +1,4 @@
-module Dashboard
+module EDash
   class ProgressReport
     class Phase
       attr_accessor :name, :value, :width

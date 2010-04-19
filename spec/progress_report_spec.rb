@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe Dashboard::ProgressReport do
+describe EDash::ProgressReport do
   def create_report
-    Dashboard::ProgressReport.new(%{[["a","4"],["b","6"],["c","10"]]})
+    EDash::ProgressReport.new(%{[["a","4"],["b","6"],["c","10"]]})
   end
   context "when creating" do
     it "calculates the correct width for the progress report" do
-      Dashboard::ProgressReport::Phase.should_receive(:new).with('a', 4, 20)
-      Dashboard::ProgressReport::Phase.should_receive(:new).with('b', 6, 30)
-      Dashboard::ProgressReport::Phase.should_receive(:new).with('c', 10, 50)
+      EDash::ProgressReport::Phase.should_receive(:new).with('a', 4, 20)
+      EDash::ProgressReport::Phase.should_receive(:new).with('b', 6, 30)
+      EDash::ProgressReport::Phase.should_receive(:new).with('c', 10, 50)
       create_report
     end
   end

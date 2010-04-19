@@ -1,6 +1,6 @@
 require 'rubygems'
 
-require File.join(File.dirname(__FILE__), '..', 'dashboard.rb')
+require File.join(File.dirname(__FILE__), '..', 'server.rb')
 require File.join(File.dirname(__FILE__), '..', 'client.rb')
 require File.join(File.dirname(__FILE__), '..', 'project.rb')
 require File.join(File.dirname(__FILE__), '..', 'progress_report.rb')
@@ -18,7 +18,7 @@ Webrat.configure do |config|
 end
 
 # set test environment
-Dashboard::Server.set :environment, :test
-Dashboard::Server.set :run, false
-Dashboard::Server.set :raise_errors, true
-Dashboard::Server.set :logging, false
+EDash::Server.set :environment, :test
+EDash::Server.set :run, false
+EDash::Server.set :raise_errors, true
+EDash::Server.set :logging, false

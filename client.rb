@@ -1,7 +1,7 @@
 require 'eventmachine'
 require 'em-http'
 
-module Dashboard
+module EDash
   module Client
     def self.send_message(host, message)
       EventMachine.run do
