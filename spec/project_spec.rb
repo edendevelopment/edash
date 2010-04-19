@@ -56,6 +56,7 @@ describe EDash::Project do
       project = EDash::Project.new('project' => 'foo')
       progress = mock(:progress)
       project.progress = progress
+      project.progress.should == progress
     end
   end
 end
