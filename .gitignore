@@ -5,3 +5,4 @@ tmp*
 nohup.out
 coverage
 **DS_Store
+.rvmrc
