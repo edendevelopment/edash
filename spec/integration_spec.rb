@@ -105,10 +105,18 @@ describe "Integration Tests:" do
         do_post('C P <dev sermoa tristanharris@edendevelopment.co.uk>')
         last_response.body.should have_selector('div.project img[src*="fecb482a5c1d13c869027b5dac71da00"]')
       end
-      
+
       it "posts to a websocket" do
         EDash::Client.should_receive(:send_message).with(anything, /"status":"fail"/)
         do_post
+      end
+    end
+    context "successive posting" do
+      it "displays the last status" do
+        do_post('pass')
+        do_post('fail')
+        visit '/'
+        last_response.body.should have_selector('a.fail')
       end
     end
   end

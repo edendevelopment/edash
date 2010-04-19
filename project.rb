@@ -45,6 +45,10 @@ module EDash
 
     def initialize(params)
       @name = params['project']
+      update_from(params)
+    end
+
+    def update_from(params)
       @author = params['author']
       @status = params['status']
 

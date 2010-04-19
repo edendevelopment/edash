@@ -37,6 +37,8 @@ module EDash
       project = Project.find(params[:project])
       if (project.nil?)
         project = Project.new(params)
+      else
+        project.update_from(params)
       end
       Project.save(project)
       EDash::Client.send_message(request.host, project.to_json)
