@@ -4,6 +4,7 @@ require 'sass'
 
 require 'client'
 require 'project'
+require 'progress_report'
 
 module Dashboard
   class Server < Sinatra::Base
@@ -40,8 +41,7 @@ module Dashboard
 
     post '/progress/?' do
       project = Project.find(params[:project])
-      progress = JSON.parse(params[:progress])
-      project.progress = progress
+      project.progress = ProgressReport.new(params[:progress])
       Project.save(project)
     end
 

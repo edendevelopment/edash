@@ -3,6 +3,7 @@ require 'rubygems'
 require File.join(File.dirname(__FILE__), '..', 'dashboard.rb')
 require File.join(File.dirname(__FILE__), '..', 'client.rb')
 require File.join(File.dirname(__FILE__), '..', 'project.rb')
+require File.join(File.dirname(__FILE__), '..', 'progress_report.rb')
 
 require 'sinatra'
 require 'rack/test'

@@ -43,6 +43,14 @@ describe Dashboard::Server do
         div.should contain(/10/)
       end
     end
+
+    it "shows the width correctly" do
+      post "progress", :project => "moo", :progress => %{[["finished","10"],["started","40"],["unstarted","10"]]}
+      visit '/'
+      last_response.body.should have_selector('div.finished', :style => 'width:50px')
+      last_response.body.should have_selector('div.started', :style => 'width:200px')
+      last_response.body.should have_selector('div.unstarted', :style => 'width:50px')
+    end
   end
   context "posting build update" do
     def do_post(status)
@@ -75,7 +83,6 @@ describe Dashboard::Server do
       last_response.body.should have_selector('div.project img[src*=loading]')
     end
     context "with an author" do
-
       def do_post(author = "")
         post 'build', :project => 'moo', :status => 'fail', :author => author
         visit '/'

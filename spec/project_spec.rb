@@ -56,7 +56,6 @@ describe Dashboard::Project do
       project = Dashboard::Project.new('project' => 'foo')
       progress = mock(:progress)
       project.progress = progress
-      project.progress.should == progress
     end
   end
 end

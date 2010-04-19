@@ -58,11 +58,12 @@ body
   clear: both
   position: relative
   .progress-bg
-    margin: 70px 0px 0px 10px
+    margin: 70px 0px 0px 20px
     padding: 0
     position: absolute
     .progress
       float: right
+      width: 150px
       +progress_bar
     .progress:first-child
       -webkit-border-radius: 0px 15px 15px 0px
@@ -70,7 +71,6 @@ body
       -webkit-border-radius: 15px 0px 0px 15px
     .progress.finished
       +green_gradient
-      width: 20px
     .progress.started
       +grey_gradient
     .progress.notstarted

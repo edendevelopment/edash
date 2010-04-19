@@ -74,5 +74,5 @@
           - if project.progress
             .progress-bg
               - project.progress.each do |phase|
-                %div{:class => "progress #{phase.first}"}
-                  = phase.last
+                %div{:class => "progress #{phase.name}", :style => "width:#{phase.adjust_width_to(300)}px"}
+                  = phase.value
