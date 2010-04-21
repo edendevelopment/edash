@@ -9,14 +9,12 @@
         window.setTimeout("queue.process()", count);
       }
 
-      function updateProjectBoxWithFade(project) {
-        box = $('#'+project.name+' a');
-        if (box.size() == 0) {
-          document.location.reload(true);
-        }
-        newbox = box.clone();
+      function createNewBoxFrom(box, project) {
+        return box.clone();
+      }
+
+      function syncBoxToProject(newbox, project) {
         newbox.removeClass();
-        // project specific stuff
         newbox.addClass(project.status);
         if (project.status == 'building') {
           newbox.find('img').attr('src', '#{path_root}/images/loading.gif');
@@ -24,17 +22,49 @@
         else {
           newbox.find('img').attr('src', project.author_gravatar);
         }
-        // animation stuff
-        newbox.css('position', 'absolute');
-        newbox.css('left', '0');
-        newbox.hide();
-        newbox.appendTo(box.parent());
-        newbox.fadeIn(2000, function(){
-          newbox.css('position', 'static');
-          box.remove();
+        return newbox;
+      }
+
+      function fadeOver(newelement, element) {
+        newelement.css('position', 'absolute');
+        newelement.css('left', '0');
+        newelement.hide();
+        newelement.appendTo(element.parent());
+        newelement.fadeIn(2000, function() {
+          newelement.css('position', 'static');
+          element.remove();
           queue.schedule(500);
         });
-        box.fadeOut(2000);
+        element.fadeOut(2000);
+      }      
+
+      function updateBuildStatus(project) {
+        box = $('#'+project.name+' a');
+        if (box.size() == 0) {
+          document.location.reload(true);
+        }
+        newbox = createNewBoxFrom(box);
+        syncBoxToProject(newbox, project);
+        fadeOver(newbox, box);
+      }
+
+      function syncBarToProject(newbar, project) {
+        // to be completed; just refresh for now.
+      }
+      
+      function updateProgressStatus(project) {
+        bar = $('#'+project.name+' progress-bg')
+        if (bar.size() == 0) {
+          document.location.reload(true);
+        }
+        newbar = createNewBarFrom(bar);
+        syncBarToProject(newbar, project);
+        fadeOver(newbar, bar);
+      }
+
+      function updateProjectBoxWithFade(project) {
+        updateBuildStatus(project);
+        updateProgressStatus(project);
       };
 
       queue = new Queue(updateProjectBoxWithFade, runQueueIn);
