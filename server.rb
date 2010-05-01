@@ -28,6 +28,19 @@ module EDash
       end
     end
 
+    get '/?', :agent => /iPhone|iPod/ do
+      @projects = Project.all
+      haml :mobile
+    end
+
+    get '/detail/:project', :agent => /iPhone|iPod/ do
+      @project = Project.find(params[:project])
+      if (@project.nil?)
+        return 404
+      end
+      haml :detail, :layout => false
+    end
+
     get '/?' do
       @projects = Project.all
       haml :index
@@ -58,6 +71,11 @@ module EDash
     get '/main.css' do
       content_type 'text/css', :charset => 'utf-8'
       sass :main
+    end
+    
+    get '/mobile.css' do
+      content_type 'text/css', :charset => 'utf-8'
+      sass :mobile
     end
   end
 end

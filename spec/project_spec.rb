@@ -36,6 +36,7 @@ describe EDash::Project do
     its(:author) { should be_nil }
     its(:status) { should == 'pass' }
     its(:name) { should == 'foo' }
+    its(:author_email) { should be_nil }
     its(:author_gravatar) { should be_nil }
   end
 
@@ -44,10 +45,12 @@ describe EDash::Project do
     subject { EDash::Project.new('project' => 'foo', 'author' => author)}
 
     its(:author) { should == author }
+    its(:author_email) { should match('chris@example.com') }
     its(:author_gravatar) { should match('9655f78d38f380d17931f8dd9a227b9f') }
     its(:to_json) do
       should match(/"name":"foo"/)
       should match(/"author":"Chris/)
+      should match(/"author_email":"chris@example.com"/)
     end
   end
 

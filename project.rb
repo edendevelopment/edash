@@ -36,7 +36,7 @@ module EDash
       end
     end
 
-    attr_reader :name, :author, :status, :author_gravatar
+    attr_reader :name, :author, :status, :author_email, :author_gravatar
     attr :progress, :writer => true
 
     def <=>(other)
@@ -52,13 +52,14 @@ module EDash
       @author = params['author']
       @status = params['status']
 
-      if (params['author'] && params['author'].size > 0)
-        @author_gravatar = gravatar_from(params['author'])
+      if (@author && @author.size > 0)
+        @author_email = @author.match(/<(.*)>/)[1].gsub(' ', '+')
+        @author_gravatar = gravatar_uri
       end
     end
-    
-    def gravatar_from(author)
-      "http://www.gravatar.com/avatar/#{MD5::md5(author.match(/<(.*)>/)[1].gsub(' ', '+'))}?s=50"
+
+    def gravatar_uri
+      "http://www.gravatar.com/avatar/#{MD5::md5(@author_email)}?s=50"
     end
 
     def to_json(*a)
@@ -66,7 +67,8 @@ module EDash
         'json_class' => self.class.name,
         'name' => name,
         'author' => author,
-        'status' => status, 
+        'status' => status,
+        'author_email' => author_email,
         'author_gravatar' => author_gravatar
       }.to_json(*a)
     end
