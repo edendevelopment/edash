@@ -63,7 +63,7 @@ module EDash
 
     def to_json(*a)
       {
-        'json_class'   => self.class.name,
+        'json_class' => self.class.name,
         'name' => name,
         'author' => author,
         'status' => status, 
