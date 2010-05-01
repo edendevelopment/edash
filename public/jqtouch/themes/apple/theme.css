@@ -1,8 +1,8 @@
-body, #jqt {
+body {
     background: rgb(0,0,0);
 }
 
-body > *, #jqt > * {
+#jqt > * {
     background: rgb(197,204,211) url(img/pinstripes.png);
 }
 

@@ -17,22 +17,18 @@
       #home.current
         .toolbar
           %h1 CI Dashboard
-          %a.button{:href => "/refresh"} Refresh
-        %ul.rounded
-          - @projects.each do |name, project|
-            %li.arrow
-              %a{:href => "#detail"}
-                - if project.status == 'building'
-                  %img{:src => "#{path_root}/images/building.png", :alt => "", :height=> "19", :width => "19"}
-                - elsif project.status == 'pass'
-                  %img{:src => "#{path_root}/images/pass.png", :alt => "", :height=> "19", :width => "19"}
-                - elsif project.status == 'fail'
-                  %img{:src => "#{path_root}/images/fail.png", :alt => "", :height=> "19", :width => "19"}
-                = name
-      #detail
-        .toolbar
-          %a.back Back
-          %h1 Details Placeholder
+        - if !@projects.empty?
+          %ul.rounded
+            - @projects.each do |name, project|
+              %li.arrow
+                %a{:href => "/detail/#{name}"}
+                  - if project.status == 'building'
+                    %img{:src => "#{path_root}/images/building.png", :alt => "", :height=> "19", :width => "19"}
+                  - elsif project.status == 'pass'
+                    %img{:src => "#{path_root}/images/pass.png", :alt => "", :height=> "19", :width => "19"}
+                  - elsif project.status == 'fail'
+                    %img{:src => "#{path_root}/images/fail.png", :alt => "", :height=> "19", :width => "19"}
+                  = name
     #installation{:style => "display: none;"}
       %p Installation instructions
       #arrow

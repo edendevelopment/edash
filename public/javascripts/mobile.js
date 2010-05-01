@@ -4,6 +4,7 @@ if (window.navigator.standalone) {
   $container.attr("id", "jqt");
   $container.show();
   jQT = new $.jQTouch({
+    cacheGetRequests: false,
     statusBar: "black",
     preloadImages: [
     "/jqtouch/themes/apple/img/backButton.png",

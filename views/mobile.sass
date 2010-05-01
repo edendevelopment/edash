@@ -1,19 +1,23 @@
-!iphoneheight = "460px"
+!iphone_height = "460px"
 
 body
   -webkit-tap-highlight-color: transparent
   -webkit-text-size-adjust: none
   color: #b5f278
   font: 16px/20px Helvetica, sans-serif
-  height = !iphoneheight
+  height = !iphone_height
   margin: 0
-  max-height: 460px
+  max-height = !iphone_height
   padding: 0
   width: 100%
-  
+
 ul.rounded
   img
     margin-right: 8px
+
+#author_email
+  color: #000
+  font-size: 80%
 
 #arrow
   background: -webkit-canvas(arrow) no-repeat top center
@@ -30,10 +34,10 @@ ul.rounded
   display: none
   background: #69962f
   color: #b5f278
-  height = !iphoneheight
+  height = !iphone_height
   left: 0
-  max-height: 460px
-  min-height: 460px
+  max-height = !iphone_height
+  min-height = !iphone_height
   position: absolute
   text-shadow: rgba(0,0,0,.7) 0px -1px 0px
   top: 0

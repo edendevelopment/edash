@@ -28,17 +28,19 @@ module EDash
       end
     end
 
-    # No iPad support yet
     get '/?', :agent => /iPhone|iPod/ do
       @projects = Project.all
       haml :mobile
     end
-    
-    get '/refresh', :agent => /iPhone|iPod/ do
-      @projects = Project.all
-      haml :mobile
+
+    get '/detail/:project', :agent => /iPhone|iPod/ do
+      @project = Project.find(params[:project])
+      if (@project.nil?)
+        return 404
+      end
+      haml :detail, :layout => false
     end
-    
+
     get '/?' do
       @projects = Project.all
       haml :index

@@ -1,0 +1,22 @@
+#detail
+  .toolbar
+    %a.back Back
+    %h1 #{@project.name} Details
+  %ul.rounded
+    %li
+      - if @project.status == 'building'
+        %img{:src => "#{path_root}/images/building.png", :alt => "", :height => "19", :width => "19"}
+        Build In Progress
+      - elsif @project.status == 'pass'
+        %img{:src => "#{path_root}/images/pass.png", :alt => "", :height => "19", :width => "19"}
+        Build Successful
+      - elsif @project.status == 'fail'
+        %img{:src => "#{path_root}/images/fail.png", :alt => "", :height => "19", :width => "19"}
+        Build Failed
+    %li
+      %img{:src => @project.author_gravatar, :alt => "", :height => "50",  :width => "50"}
+      %div
+        = @project.author
+        %br/
+        %span#author_email
+          = @project.author_email
