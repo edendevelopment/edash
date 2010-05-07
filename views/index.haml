@@ -66,6 +66,9 @@
       project_queue = new Queue(updateProjectBoxWithFade, function(count) {
         window.setTimeout("project_queue.process()", count);
       });
+      // countdown_queue = new Queue(updateCountdown, function(count) {
+      //  window.setTimeout("countdown_queue.process()", count);
+      //});
       
       errorfunction = function() { 
           window.setTimeout('window.location.reload(true)', 10000);
@@ -75,8 +78,15 @@
       $(document).ready(function(){
         ws = new WebSocket("ws://#{request.host}:8080/");
         ws.onmessage = function(evt) { 
-          project = JSON.parse(evt.data);
-          project_queue.push(project);
+          data = JSON.parse(evt.data);
+          if (data.json_class == "EDash::Countdown")
+          {
+           // countdown_queue.push(data);
+          }
+          else
+          {
+            project_queue.push(data);
+          }
         }
 
         ws.onclose = errorfunction;
