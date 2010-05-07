@@ -127,10 +127,20 @@
         
         var now = new Date();
         
-        // var status = "";
+        var status = "";
         
+        if(targetDate < now) {
+          status = "NOW: " + countdown.description;
+        } else {
+          var difference = Math.ceil((targetDate.getTime()-now.getTime())/(86400000));
+          if(difference > 1) {
+            status = difference + ' days until ' + countdown.description;
+          } else {
+            status = difference + ' day until ' + countdown.description;
+          }
+        }
         
-        $('#' + countdown.id + ' .display').text(countdown.description);
+        $('#' + countdown.id + ' .display').text(status);
       }
       
     %link{:rel => 'stylesheet', :type => 'text/css', :href => "#{path_root}/main.css"}
