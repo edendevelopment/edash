@@ -66,9 +66,9 @@
       project_queue = new Queue(updateProjectBoxWithFade, function(count) {
         window.setTimeout("project_queue.process()", count);
       });
-      // countdown_queue = new Queue(updateCountdown, function(count) {
-      //  window.setTimeout("countdown_queue.process()", count);
-      //});
+      countdown_queue = new Queue(updateCountdown, function(count) {
+        window.setTimeout("countdown_queue.process()", count);
+      });
       
       errorfunction = function() { 
           window.setTimeout('window.location.reload(true)', 10000);
@@ -81,7 +81,7 @@
           data = JSON.parse(evt.data);
           if (data.json_class == "EDash::Countdown")
           {
-           // countdown_queue.push(data);
+           countdown_queue.push(data);
           }
           else
           {
@@ -96,9 +96,41 @@
         project_queue.schedule(1000);
       });
       
-      var displayCountdown = function(json) {
-        var data = JSON.parse(json);
-        $('#' + data.id + ' .display').text(data.description);
+      Date.prototype.setISO8601 = function (string) {
+          var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
+              "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
+              "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
+          var d = string.match(new RegExp(regexp));
+
+          var offset = 0;
+          var date = new Date(d[1], 0, 1);
+
+          if (d[3]) { date.setMonth(d[3] - 1); }
+          if (d[5]) { date.setDate(d[5]); }
+          if (d[7]) { date.setHours(d[7]); }
+          if (d[8]) { date.setMinutes(d[8]); }
+          if (d[10]) { date.setSeconds(d[10]); }
+          if (d[12]) { date.setMilliseconds(Number("0." + d[12]) * 1000); }
+          if (d[14]) {
+              offset = (Number(d[16]) * 60) + Number(d[17]);
+              offset *= ((d[15] == '-') ? 1 : -1);
+          }
+
+          offset -= date.getTimezoneOffset();
+          time = (Number(date) + (offset * 60 * 1000));
+          this.setTime(Number(time));
+      }
+      
+      var updateCountdown = function(countdown) {
+        var targetDate = new Date();
+        targetDate.setISO8601(countdown.timestamp);
+        
+        var now = new Date();
+        
+        // var status = "";
+        
+        
+        $('#' + countdown.id + ' .display').text(countdown.description);
       }
       
     %link{:rel => 'stylesheet', :type => 'text/css', :href => "#{path_root}/main.css"}
@@ -126,7 +158,7 @@
         .countdown{:id => countdown.id}
           .display
             :javascript
-              displayCountdown('#{countdown.to_json}');
+              updateCountdown(JSON.parse('#{countdown.to_json}'));
           .configuration
             %form#countdown-configuration{:action => '/countdown', :method => 'post'}
               %input{:type => 'hidden', :name => '_method', :value => 'put'}

@@ -45,5 +45,13 @@ module EDash
     end
     
     attr_reader :id, :description, :timestamp
+    
+    def to_json
+      {
+        'description' => description,
+        'timestamp' => timestamp.iso8601,
+        'id' => id
+      }.to_json
+    end
   end
 end
