@@ -138,7 +138,7 @@
         
         var status = "";
         
-        var format = '<span class="days">{dn}d</span> <span class="hours">{hn}h</span> <span class="minutes">{mn}m</span> <span class="seconds">{sn}s</span> <span class="description">' + countdown.description + '</span>';
+        var format = '<span class="timestamp">{dn}d {hn}h {mn}:{sn}<span class="description">' + countdown.description + '</span>';
         $('.display').each(function() {
           var $c = $(this);
           var days = $c.find('.days').text().replace(/\D/g, '');
