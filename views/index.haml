@@ -55,7 +55,7 @@
       function updateProgressStatus(project) {
         bar = $('#'+project.name+' progress-bg')
         if (bar.size() == 0) {
-          document.location.reload(true);
+          //document.location.reload(true);
         }
         newbar = createNewBarFrom(bar);
         syncBarToProject(newbar, project);
@@ -87,6 +87,12 @@
 
         queue.schedule(1000);
       });
+      
+      var displayCountdown = function(json) {
+        var data = JSON.parse(json);
+        $('#' + data.id + ' .display').text(data.description);
+      }
+      
     %link{:rel => 'stylesheet', :type => 'text/css', :href => "#{path_root}/main.css"}
   %body
     .server-closed
@@ -107,3 +113,19 @@
               - project.progress.each do |phase|
                 %div{:class => "progress #{phase.name}", :style => "width:#{phase.adjust_width_to(300)}px"}
                   = phase.value
+    .countdowns
+      - @countdowns.each do |countdown|
+        .countdown{:id => countdown.id}
+          .display
+            :javascript
+              displayCountdown('#{countdown.to_json}');
+          .configuration
+            %form#countdown-configuration{:action => '/countdown', :method => 'post'}
+              %input{:type => 'hidden', :name => '_method', :value => 'put'}
+              %label{:for => "countdown-configuration-description"}
+                = "Description"
+              %input#countdown-configuration-description{:name => 'countdown[description]', :value => countdown.description}
+              %label{:for => "countdown-configuration-date"}
+                = "Target Time"
+              = select_datetime(countdown.timestamp, {:order => [:day, :month, :year], :prefix => 'countdown'})
+              %input{:type => 'submit', :value => 'Save'}
