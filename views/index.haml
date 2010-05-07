@@ -180,7 +180,7 @@
               updateCountdown(JSON.parse('#{countdown.to_json}'));
           %a{:href => '#', :onclick => "$('.countdown .configuration').toggle(); return false;"}= "兀"
           .configuration
-            %form#countdown-configuration{:action => '/countdown', :method => 'post'}
+            %form#countdown-configuration{:action => "#{path_root}/countdown", :method => 'post'}
               %input{:type => 'hidden', :name => '_method', :value => 'put'}
               %label{:for => "countdown-configuration-description"}
                 = "Description"
