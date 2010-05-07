@@ -10,15 +10,17 @@ describe EDash::Project do
 
     context "#all" do
       it "returns all objects in the store" do
-        store.stub!(:roots).and_return(['foo'])
-        store.should_receive(:[]).with('foo')
-        EDash::Project.all
+        project = mock(:project)
+        store.stub!(:[]).and_return({'foo' => project})
+        EDash::Project.all.should == [project]
       end
     end
     context "#save" do
       it "saves the project to the store" do
         project = mock(:name => 'foo')
-        store.should_receive(:[]=).with('foo', project)
+        list = {}
+        store.stub!(:[]).and_return(list)
+        list.should_receive(:[]=).with('foo', project)
         EDash::Project.save(project)
       end
     end
@@ -26,7 +28,9 @@ describe EDash::Project do
     context "#find" do
       it "retrieve the project by name" do
         project = mock(:project)
-        store.should_receive(:[]).with('foo').and_return(project)
+        project_list = {'foo' => project }
+        store.stub!(:[]).and_return(project_list)
+        project_list.should_receive(:[]).with('foo').and_return(project)
         EDash::Project.find('foo').should == project
       end
     end
