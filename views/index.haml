@@ -146,10 +146,10 @@
           var minutes = $c.find('.minutes').text().replace(/\D/g, '');
           var seconds = $c.find('.seconds').text().replace(/\D/g, '');
           var total_seconds = days*24*3600 + hours*3600 + minutes*60 + seconds*1;
-          $c.countdown({until: targetDate, layout: format});
+          $c.countdown({until: targetDate, layout: format, alwaysExpire: true, onExpiry: function() {
+            $c.html('<span class="timestamp">NOW</span><span class="description">' + countdown.description + '</span>');
+          }});
         });
-        
-        $('#' + countdown.id + ' .display').text(status);
       }
       
     %link{:rel => 'stylesheet', :type => 'text/css', :href => "#{path_root}/main.css"}
