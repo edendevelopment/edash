@@ -8,10 +8,6 @@ require 'progress_report'
 require 'storage'
 
 # For Countdown widget
-gem 'activesupport', '2.3.5'
-require 'active_support'
-gem 'actionpack', '2.3.5'
-require 'action_view/helpers/date_helper'
 require 'countdown'
 
 module EDash
@@ -34,8 +30,6 @@ module EDash
       def path_root
         ENV["RACK_BASE_URI"]
       end
-      
-      include ActionView::Helpers::DateHelper
     end
 
     get '/?', :agent => /iPhone|iPod/ do
