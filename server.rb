@@ -2,9 +2,16 @@ require 'sinatra'
 require 'haml'
 require 'sass'
 
+# For Countdown widget
+gem 'activesupport', '2.3.5'
+require 'active_support'
+gem 'actionpack', '2.3.5'
+require 'action_view/helpers/date_helper'
+
 require 'client'
 require 'project'
 require 'progress_report'
+require 'countdown'
 
 module EDash
   class Server < Sinatra::Base
@@ -26,6 +33,8 @@ module EDash
       def path_root
         ENV["RACK_BASE_URI"]
       end
+      
+      include ActionView::Helpers::DateHelper
     end
 
     get '/?', :agent => /iPhone|iPod/ do
@@ -43,6 +52,7 @@ module EDash
 
     get '/?' do
       @projects = Project.all
+      @countdowns = Countdown.all
       haml :index
     end
 
@@ -66,6 +76,12 @@ module EDash
         Project.save(project)
       end
       EDash::Client.send_message(request.host, project.to_json)
+    end
+    
+    post '/countdown/?' do
+      countdown = Countdown.find_or_create(params[:countdown])
+      EDash::Client.send_message(request.host, countdown.to_json)
+      redirect '/'
     end
 
     get '/main.css' do
