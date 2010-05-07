@@ -5,10 +5,6 @@
     %script{:type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
     %script{:type => "text/javascript", :src => "#{path_root}/javascripts/queue.js"}
     :javascript
-      function runQueueIn(count) {
-        window.setTimeout("queue.process()", count);
-      }
-
       function createNewBoxFrom(box, project) {
         return box.clone();
       }
@@ -33,7 +29,7 @@
         newelement.fadeIn(2000, function() {
           newelement.css('position', 'static');
           element.remove();
-          queue.schedule(500);
+          project_queue.schedule(500);
         });
         element.fadeOut(2000);
       }      
@@ -49,7 +45,7 @@
       }
 
       function syncBarToProject(newbar, project) {
-        // to be completed; just refresh for now.
+        document.location.reload(true);
       }
       
       function updateProgressStatus(project) {
@@ -67,7 +63,9 @@
         updateProgressStatus(project);
       };
 
-      queue = new Queue(updateProjectBoxWithFade, runQueueIn);
+      project_queue = new Queue(updateProjectBoxWithFade, function(count) {
+        window.setTimeout("project_queue.process()", count);
+      });
       
       errorfunction = function() { 
           window.setTimeout('window.location.reload(true)', 10000);
@@ -78,14 +76,14 @@
         ws = new WebSocket("ws://#{request.host}:8080/");
         ws.onmessage = function(evt) { 
           project = JSON.parse(evt.data);
-          queue.push(project);
+          project_queue.push(project);
         }
 
         ws.onclose = errorfunction;
         ws.onerror = errorfunction;
         ws.onopen = function() { };
 
-        queue.schedule(1000);
+        project_queue.schedule(1000);
       });
     %link{:rel => 'stylesheet', :type => 'text/css', :href => "#{path_root}/main.css"}
   %body

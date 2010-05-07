@@ -6,19 +6,19 @@ describe 'queue.js' do
   before     { page.load('public/javascripts/queue.js') }
   it "pushes a new object onto the queue" do
     page.execute_js(<<-JS)
-      queue = new Queue();
-      queue.push('foo');
+      q = new Queue();
+      q.push('foo');
     JS
-    page.execute_js('queue.length()').should == 1
+    page.execute_js('q.length()').should == 1
   end
 
   it "runs the given function on anything passed into the queue" do
     page.execute_js(<<-JS)
       function addBar(hash) { hash['foo'] = 'baz'; }
-      queue = new Queue(addBar);
+      q = new Queue(addBar);
       myObject = {'foo':'bar'};
-      queue.push(myObject);
-      queue.process();
+      q.push(myObject);
+      q.process();
     JS
     page.execute_js('myObject["foo"]').should == 'baz'
   end
@@ -28,8 +28,8 @@ describe 'queue.js' do
       page.execute_js(<<-JS)
         var calledWith = null;
         function scheduleFunc(param) { calledWith = param; }
-        queue = new Queue(function(){}, scheduleFunc);
-        queue.schedule('foo');
+        q = new Queue(function(){}, scheduleFunc);
+        q.schedule('foo');
       JS
       page.execute_js('calledWith').should == 'foo'
     end

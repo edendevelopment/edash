@@ -14,11 +14,11 @@ function Queue(processFunction, scheduleFunction) {
     return this._array.length;
   };
   this.process = function() {
-    if (queue.length() == 0) { 
+    if (this.length() == 0) { 
       scheduleFunction(1000);
       return; 
     }
-    processFunction(queue.next());
+    processFunction(this.next());
   };
   this.schedule = function(count) {
     scheduleFunction(count);
