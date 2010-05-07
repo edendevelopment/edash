@@ -178,12 +178,14 @@
           .display
             :javascript
               updateCountdown(JSON.parse('#{countdown.to_json}'));
+          %a{:href => '#', :onclick => "$('.countdown .configuration').toggle(); return false;"}= "兀"
           .configuration
             %form#countdown-configuration{:action => '/countdown', :method => 'post'}
               %input{:type => 'hidden', :name => '_method', :value => 'put'}
               %label{:for => "countdown-configuration-description"}
                 = "Description"
               %input#countdown-configuration-description{:name => 'countdown[description]', :value => countdown.description}
+              %br
               %label{:for => "countdown-configuration-date"}
                 = "Target Time"
               %select#countdown_day{:name => 'countdown[day]'}
