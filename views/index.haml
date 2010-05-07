@@ -98,10 +98,10 @@
     .server-closed
       Server connection problem: try a refresh.
     .projects
-      - @projects.each do |name, project|
-        %div{:class => "project", :id => name }
-          %a{:class => project.status, :href => "/#{name}"}
-            = name
+      - @projects.each do |project|
+        %div{:class => "project", :id => project.name }
+          %a{:class => project.status, :href => "/#{project.name}"}
+            = project.name
             - if project.status == 'building'
               .last_author
                 %img{:src => "#{path_root}/images/loading.gif"}
