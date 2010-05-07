@@ -2,15 +2,12 @@ require 'sinatra'
 require 'haml'
 require 'sass'
 
-# For Countdown widget
-gem 'activesupport', '2.3.5'
-require 'active_support'
-gem 'actionpack', '2.3.5'
-require 'action_view/helpers/date_helper'
-
 require 'client'
 require 'project'
 require 'progress_report'
+require 'storage'
+
+# For Countdown widget
 require 'countdown'
 
 module EDash
@@ -25,7 +22,7 @@ module EDash
     end
 
     def initialize
-      Project.init_store(options.environment.to_s)
+      Storage.init_store(options.environment.to_s)
       super
     end
 
@@ -33,8 +30,6 @@ module EDash
       def path_root
         ENV["RACK_BASE_URI"]
       end
-      
-      include ActionView::Helpers::DateHelper
     end
 
     get '/?', :agent => /iPhone|iPod/ do

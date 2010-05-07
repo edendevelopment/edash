@@ -1,12 +1,41 @@
 module EDash
   class Countdown
     
-    def self.find_or_create(params)
-      @countdown = Countdown.new(params)
-    end
+    class << self
+      def store
+        Storage.store
+      end
+      
+      def all
+        countdowns = nil
+        store.transaction do
+          countdowns = store['countdowns'] || {}
+        end
+        countdowns.values
+      end
 
-    def self.all
-      [@countdown].compact
+      def save(countdown)
+        store.transaction do
+          store['countdowns'] ||= {}
+          store['countdowns'][countdown.id] = countdown
+        end
+      end
+
+      def find(id)
+        store.transaction do
+          countdowns = store['countdowns'] || {}
+          countdowns[id]
+        end
+      end
+    end
+    
+    def self.find_or_create(params)
+      countdown = Countdown.find(params['id'])
+      return countdown if countdown
+      
+      countdown = Countdown.new(params)
+      save(countdown)
+      countdown
     end
     
     def initialize(params)

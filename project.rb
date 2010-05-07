@@ -5,33 +5,30 @@ require 'json'
 module EDash
   class Project
     class << self
-      def init_store(env)
-        @store = PStore.new(File.dirname(__FILE__)+'/edash-'+ env +'.pstore')
-      end
-
       def store
-        @store
+        Storage.store
       end
-
+      
       def all
-        projects = {}
+        projects = nil
         store.transaction do
-          store.roots.each do |name|
-            projects[name] = store[name]
-          end
+          projects = store['projects'] || {}
         end
+        projects = projects.values
         projects.sort
       end
 
       def save(project)
         store.transaction do
-          store[project.name] = project
+          store['projects'] ||= {}
+          store['projects'][project.name] = project
         end
       end
 
       def find(name)
         store.transaction do
-          store[name]
+          projects = store['projects'] || {}
+          projects[name]
         end
       end
     end
