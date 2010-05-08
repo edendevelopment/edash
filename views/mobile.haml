@@ -19,16 +19,16 @@
           %h1 CI Dashboard
         - if !@projects.empty?
           %ul.rounded
-            - @projects.each do |name, project|
+            - @projects.each do |project|
               %li.arrow
-                %a{:href => "/detail/#{name}"}
+                %a{:href => "/detail/#{project.name}"}
                   - if project.status == 'building'
                     %img{:src => "#{path_root}/images/building.png", :alt => "", :height=> "19", :width => "19"}
                   - elsif project.status == 'pass'
                     %img{:src => "#{path_root}/images/pass.png", :alt => "", :height=> "19", :width => "19"}
                   - elsif project.status == 'fail'
                     %img{:src => "#{path_root}/images/fail.png", :alt => "", :height=> "19", :width => "19"}
-                  = name
+                  = project.name
     #installation{:style => "display: none;"}
       %p{:style => "line-height: 22px; text-align: center; margin-top: 150px;"}
         To install CI Dashboard, tap the
