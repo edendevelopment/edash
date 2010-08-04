@@ -28,7 +28,7 @@ module EDash
 
     helpers do
       def path_root
-        ENV["RACK_BASE_URI"]
+        "http://" + request.env["HTTP_HOST"]
       end
     end
 

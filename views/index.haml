@@ -160,7 +160,7 @@
     .projects
       - @projects.each do |project|
         %div{:class => "project", :id => project.name }
-          %a{:class => project.status, :href => "/#{project.name}"}
+          %a{:class => project.status, :href => "http://#{project.name}.ci.edendevelopment.co.uk/"}
             = project.name
             - if project.status == 'building'
               .last_author
