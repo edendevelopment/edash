@@ -1,6 +1,6 @@
 #!/bin/bash
 # Set this to your dashboard url
-HOST=http://ci.edendevelopment.co.uk/dashboard
+HOST=http://ci.edendevelopment.co.uk/
 
 FULLPATH=`cd $(dirname $0); pwd`
 echo $FULLPATH >&2
