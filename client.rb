@@ -8,13 +8,11 @@ module EDash
         http = EventMachine::HttpRequest.new("ws://#{host}:8080/websocket").get :timeout => 5
         http.errback {
           puts "Error connecting to server"
-          EventMachine.stop
         }
         http.callback {
           http.send(message)
         }
         http.stream {
-          EventMachine.stop
         }
       end
     end
